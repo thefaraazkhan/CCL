@@ -13,6 +13,7 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === "production") {
   // Serve static content
+  // Run `npm run build` to build folder
   app.use(express.static(path.join(__dirname, "client/build")));
   console.log(path.join(__dirname, "client/build"));
 }
