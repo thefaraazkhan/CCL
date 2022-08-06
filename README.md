@@ -2,26 +2,22 @@
 
 <!-- ![Todo App](todo_app_screenshot.png) -->
 
-A basic Todo app built using the PERN stack (PostgreSQL, Express, React, Node).
-
-## Introduction
-
 This project is a simple Todo application that allows users to create, edit, and delete tasks. It utilizes the PERN stack, which stands for PostgreSQL, Express, React, and Node, to provide a seamless user experience.
 
 ## Folder Structure
 
 The project contains the following files and directories:
 
-├── index.js # Backend server entry point
-├── db.js # Configuration for connecting to the PostgreSQL database
-├── database.sql # SQL file for creating the necessary database tables
-├── src
-│ ├── App.js # Main component for the React frontend
-│ ├── index.js # Entry point for the React frontend
-│ ├── components
-│ │ ├── EditTodo.jsx # Component for editing a todo item
-│ │ ├── InputTodo.jsx # Component for adding new todo items
-│ │ └── ListTodos.jsx # Component for displaying the list of todos
+├── index.js # Backend server entry point\
+├── db.js # Configuration for connecting to the PostgreSQL database\
+├── database.sql # SQL file for creating the necessary database tables\
+├── src\
+│ ├── App.js # Main component for the React frontend\
+│ ├── index.js # Entry point for the React frontend\
+│ ├── components\
+│ │ ├── EditTodo.jsx # Component for editing a todo item\
+│ │ ├── InputTodo.jsx # Component for adding new todo items\
+│ │ └── ListTodos.jsx # Component for displaying the list of todos\
 
 ## Installation
 
@@ -31,7 +27,7 @@ To run this application locally, follow these steps:
 2. Install Node.js and PostgreSQL if you haven't already.
 3. Set up the PostgreSQL database using the `database.sql` file provided in the root directory.
 4. Navigate to the root directory and install the backend dependencies using `npm install`.
-5. Navigate to the `src` folder and install the frontend dependencies using `npm install`.
+5. Navigate to the `client` folder and install the frontend dependencies using `npm install`.
 
 ## Running the Application
 
@@ -53,4 +49,4 @@ Contributions to this project are welcome! Feel free to submit pull requests or 
 
 ## Contact
 
-For any inquiries or questions about the project, you can reach me at [farazsci@gmail.com](mail).
+For any inquiries or questions about the project, you can reach me at [twitter](https://twitter.com/zaaaraf).
