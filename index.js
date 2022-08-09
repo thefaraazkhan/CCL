@@ -23,11 +23,12 @@ if (process.env.NODE_ENV === "production") {
 //create a todo
 app.post("/todos", async (req, res) => {
   try {
-    const { description } = req.body;
+    const { description, completed } = req.body;
     const newTodo = await pool.query(
-      "INSERT INTO todo (description) VALUES($1) RETURNING *",
-      [description]
+      "INSERT INTO todo (description, completed ) VALUES($1, $2) RETURNING *",
+      [description, completed]
     );
+    console.log("New Todo Created:");
     res.json(newTodo.rows[0]);
   } catch (err) {
     console.log(err.message);
@@ -37,7 +38,7 @@ app.post("/todos", async (req, res) => {
 //get all todo
 app.get("/todos", async (req, res) => {
   try {
-    const allTodo = await pool.query("SELECT * FROM todo");
+    const allTodo = await pool.query("SELECT * FROM todo ORDER BY todo_id ASC");
     res.json(allTodo.rows);
   } catch (err) {
     console.log(err.message);
@@ -57,20 +58,64 @@ app.get("/todos/:id", async (req, res) => {
   }
 });
 
-//update a todo
+// update todo description
 app.put("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { description } = req.body;
+
     const updateTodo = await pool.query(
       "UPDATE todo SET description = $1 WHERE todo_id = $2",
       [description, id]
     );
-    res.json("Todo was updated");
+    console.log(`Description was updated`);
+    // res.json(updateTodo.rows[0]);
   } catch (err) {
     console.log(err.message);
   }
 });
+
+// app.put("/todos/:id", async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { description, completed } = req.body;
+
+//     if (description) {
+//       // If the `description` property is provided in the request body
+//       const updatedTodo = await pool.query(
+//         "UPDATE todo SET description = $1 WHERE todo_id = $2 RETURNING *",
+//         [description, id]
+//       );
+
+//       if (updatedTodo.rowCount === 0) {
+//         // If no todo was updated (no todo with the specified ID found), return a 404 status code.
+//         return res.status(404).json({ message: "Todo not found" });
+//       }
+//       console.log(updatedTodo.rows[0]);
+//       res.json(updatedTodo.rows[0]);
+//     } else if (completed !== undefined) {
+//       // If the `completed` property is provided in the request body
+//       const updatedTodo = await pool.query(
+//         "UPDATE todo SET completed = $1 WHERE todo_id = $2 RETURNING *",
+//         [completed, id]
+//       );
+
+//       if (updatedTodo.rowCount === 0) {
+//         // If no todo was updated (no todo with the specified ID found), return a 404 status code.
+//         return res.status(404).json({ message: "Todo not found" });
+//       }
+
+//       console.log(updatedTodo.rows[0]);
+//       res.json(updatedTodo.rows[0]);
+//     } else {
+//       // If neither `description` nor `completed` property is provided in the request body
+//       return res.status(400).json({ message: "Invalid request body" });
+//     }
+//   } catch (err) {
+//     console.error("Error while updating todo:", err);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// });
 
 //delete a todo
 app.delete("/todos/:id", async (req, res) => {
@@ -79,7 +124,7 @@ app.delete("/todos/:id", async (req, res) => {
     const deleteTodo = await pool.query("DELETE FROM todo WHERE todo_id = $1", [
       id,
     ]);
-    res.json("Todo was deleted");
+    console.log("Todo deleted successfully");
   } catch (err) {
     console.log(err.message);
   }
