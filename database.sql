@@ -4,14 +4,15 @@ CREATE DATABASE pern - todo;
 \ c pern - todo;
 
 -- Create a new table named todo
--- add 2 columns -> first one is key and second for todo text
+-- add 3 columns -> first one is key , second for todo text and third for completed status
 CREATE TABLE todo(
     todo_id SERIAL PRIMARY KEY,
-    description VARCHAR(255)
+    description VARCHAR(255),
+    completed VARCHAR(255)
 );
 
--- Inserting a row with text 'get a job' (id will be auto assigned)
+-- Inserting a row with description: 'get a job' and completed: 'false' (id will be auto assigned)
 INSERT INTO
-    todo (description)
+    todo (description, completed)
 VALUES
-    ('Get a job')
+    ('Get a job', 'false')
