@@ -75,6 +75,23 @@ app.put("/todos/:id", async (req, res) => {
   }
 });
 
+// update todo completed status
+app.patch("/todos/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { completed } = req.body;
+
+    const updateTodo = await pool.query(
+      "UPDATE todo SET completed = $1 WHERE todo_id = $2 RETURNING *",
+      [completed, id]
+    );
+    console.log(`Completed Status was updated`);
+    // res.json(updateTodo.rows[0]);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
 // app.put("/todos/:id", async (req, res) => {
 //   try {
 //     const { id } = req.params;
