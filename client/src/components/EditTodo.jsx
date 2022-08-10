@@ -1,19 +1,23 @@
 import { useState } from "react";
 
-function EditTodo({ todo }) {
-    const [description, setDescription] = useState(todo.description);
+function EditTodo({ todo_id, description, updateDescriptionHandler }) {
+    const [editedText, setEditedText] = useState(description);
 
     //Edit function 
-    const updateDescription = async (e) => {
+    const onUpdateHandler = async e => {
         e.preventDefault();
         try {
-            const body = { description };
-            const response = await fetch(`http://localhost:5000/todos/${todo.todo_id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
+            // const body = { description };
+            const backendUrl = process.env.REACT_APP_BACKEND_URL;
+            console.log(todo_id)
+            await fetch(`${backendUrl}/todos/${todo_id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ description: editedText }),
             });
-            window.location = "/";
+            updateDescriptionHandler(todo_id, editedText);
         } catch (err) {
             console.error(err.message);
         }
@@ -23,56 +27,58 @@ function EditTodo({ todo }) {
         <div>
             <button
                 type="button"
-                class="btn btn-warning"
+                className="btn btn-warning"
                 data-bs-toggle="modal"
-                data-bs-target={`#id${todo.todo_id}`}
+                data-bs-target={`#id${todo_id}`}
+                onClick={() => setEditedText(description)}
             >
                 Edit
             </button>
 
             <div
-                class="modal fade"
-                id={`id${todo.todo_id}`}
-                tabindex="-1"
+                className="modal fade"
+                id={`id${todo_id}`}
+                tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
-                onClick={() => setDescription(todo.description)}
+                onClick={() => setEditedText(description)}
             >
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">
                                 Edit Todo
                             </h5>
                             <button
                                 type="button"
-                                class="btn-close"
+                                className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
-                                onClick={() => setDescription(todo.description)}
+                                onClick={() => setEditedText(description)}
                             ></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <input
                                 type="text"
                                 className="form-control"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                value={editedText}
+                                onChange={(e) => setEditedText(e.target.value)}
                             />
                         </div>
-                        <div class="modal-footer">
+                        <div className="modal-footer">
                             <button
                                 type="button"
-                                class="btn btn-warning"
-                                onClick={e => updateDescription(e)}
+                                className="btn btn-warning"
+                                onClick={onUpdateHandler}
+                                data-bs-dismiss="modal"
                             >
                                 Edit
                             </button>
                             <button
                                 type="button"
-                                class="btn btn-danger"
+                                className="btn btn-danger"
                                 data-bs-dismiss="modal"
-                                onClick={() => setDescription(todo.description)}
+                                onClick={() => setEditedText(description)}
                             >
                                 Close
                             </button>
