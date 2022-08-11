@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const InputTodo = () => {
+const InputTodo = ({ addTodoHandler }) => {
     const [todoText, setTodoText] = useState('');
 
     const onSubmitFormHandler = async e => {
@@ -16,7 +16,9 @@ const InputTodo = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ description: todoText, completed: false }),
             });
-
+            const data = await response.json();
+            addTodoHandler(data); // Update the state in the parent component
+            setTodoText(''); // Clear the input field
 
         } catch (err) {
             console.error(err.message);
