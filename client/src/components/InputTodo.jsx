@@ -1,18 +1,23 @@
 import { useState } from "react";
 
-function InputTodo() {
-    const [description, setDescription] = useState("");
+const InputTodo = () => {
+    const [todoText, setTodoText] = useState('');
 
-    const onSubmitForm = async (e) => {
+    const onSubmitFormHandler = async e => {
         e.preventDefault();
         try {
-            const body = { description };
-            const response = await fetch("http://localhost:5000/todos", {
+            // const completed = false;
+            // const body = { description, completed };
+            // console.log(body);
+            const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
+            const response = await fetch(`${backendUrl}/todos`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
+                body: JSON.stringify({ description: todoText, completed: false }),
             });
-            window.location = "/";
+
+
         } catch (err) {
             console.error(err.message);
         }
@@ -20,15 +25,15 @@ function InputTodo() {
 
     return (
         <div>
-            <h1 className="text-center mt-5">Todo List using PostgreSQL (PERN)</h1>
-            <form className="d-flex mt-5" onSubmit={onSubmitForm}>
+            <form className="d-flex mt-5" onSubmit={onSubmitFormHandler}>
                 <input
                     type="text"
+                    placeholder="Enter todo text"
                     className="form-control"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                ></input>
-                <button className="btn btn-success mx-1">Add</button>
+                    value={todoText}
+                    onChange={(e) => setTodoText(e.target.value)}
+                />
+                <button type="submit" className="btn btn-success mx-1">Add Todo</button>
             </form>
         </div>
     );
