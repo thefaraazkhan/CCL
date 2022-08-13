@@ -1,17 +1,17 @@
+import { regeneratorRuntime } from "regenerator-runtime";
 import { useEffect, useState } from 'react'
 import EditTodo from './EditTodo';
 import InputTodo from './InputTodo';
 
 const ListTodos = () => {
     const [todos, setTodos] = useState([]);
-
+    // const [darkMode, setDarkMode] = useState(false);
 
     const addTodoHandler = (newTodo) => {
         setTodos([...todos, newTodo]);
     }
 
     const updateDescriptionHandler = (todo_id, editedText) => {
-        getTodos();
         let editedTodo = todos.map((todo) =>
             todo.todo_id === todo_id ? { ...todo, description: editedText } : todo
         )
@@ -57,6 +57,7 @@ const ListTodos = () => {
         }
     }
 
+
     const getTodos = async () => {
         try {
             const backendUrl = process.env.REACT_APP_BACKEND_URL;
@@ -73,24 +74,35 @@ const ListTodos = () => {
         // Fetch and set initial todos from the backend
         getTodos();
 
-        // Fetch todos every 60 seconds
-        const fetchInterval = setInterval(() => {
-            getTodos();
-        }, 60000);
-
-        // Clean up the interval when the component is unmounted
-        return () => clearInterval(fetchInterval);
     }, []);
+
+    // const toggleDarkMode = () => {
+    //     setDarkMode((prevMode) => !prevMode);
+    // };
 
 
     return (
-        <div>
+        // <div className={`container${darkMode ? ' dark-mode' : ''}`} style={{ minHeight: '100vh' }}>
+        <div className="container" style={{ minHeight: '100vh' }}>
             <h1 className="text-center mt-5">Todo List using PostgreSQL (PERN)</h1>
-            <InputTodo addTodoHandler={addTodoHandler} />
+            {/* <div className="form-check form-switch">
+                <input
+                    className="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchCheckDefault"
+                    checked={darkMode}
+                    onChange={toggleDarkMode}
+                />
+                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+                    Dark Mode
+                </label>
+            </div> */}
 
-            <table className="table mt-5 text-center">
+            <InputTodo addTodoHandler={addTodoHandler} />
+            <table className="table mt-5 text-center" >
                 <thead>
-                    <tr>
+                    <tr >
                         <th>Description</th>
                         <th>Status</th>
                         <th>Edit</th>
@@ -121,7 +133,7 @@ const ListTodos = () => {
                                     todo_id={todo.todo_id}
                                     description={todo.description}
                                     updateDescriptionHandler={updateDescriptionHandler}
-                                    todos={todos}
+                                    getTodos={getTodos}
                                 />
                             </td>
                             <td>

@@ -1,15 +1,18 @@
 import { useState } from "react";
+import { regeneratorRuntime } from "regenerator-runtime";
 
-function EditTodo({ todo_id, description, updateDescriptionHandler }) {
+function EditTodo({ todo_id, description, updateDescriptionHandler, getTodos }) {
     const [editedText, setEditedText] = useState(description);
 
     //Edit function 
     const onUpdateHandler = async e => {
         e.preventDefault();
+        console.log(editedText);
         try {
+            updateDescriptionHandler(todo_id, editedText);
             // const body = { description };
             const backendUrl = process.env.REACT_APP_BACKEND_URL;
-            console.log(todo_id)
+            // console.log(todo_id)
             await fetch(`${backendUrl}/todos/${todo_id}`, {
                 method: 'PUT',
                 headers: {
@@ -17,7 +20,7 @@ function EditTodo({ todo_id, description, updateDescriptionHandler }) {
                 },
                 body: JSON.stringify({ description: editedText }),
             });
-            updateDescriptionHandler(todo_id, editedText);
+
         } catch (err) {
             console.error(err.message);
         }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { regeneratorRuntime } from "regenerator-runtime";
 
 const InputTodo = ({ addTodoHandler }) => {
     const [todoText, setTodoText] = useState('');
