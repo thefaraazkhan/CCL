@@ -6,6 +6,8 @@ const InputTodo = ({ addTodoHandler }) => {
 
     const onSubmitFormHandler = async e => {
         e.preventDefault();
+        if (todoText === "") return;
+
         try {
             // const completed = false;
             // const body = { description, completed };

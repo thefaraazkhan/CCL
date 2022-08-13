@@ -122,10 +122,10 @@ const ListTodos = () => {
                             </td>
                             <td>
                                 <button
-                                    className="btn btn-primary"
+                                    className="btn btn-primary p-1"
                                     onClick={() => toggleTodoHandler(todo.todo_id)}
                                 >
-                                    {todo.completed ? "Mark Incomplete" : "Mark Complete"}
+                                    {todo.completed ? "Mark Incomplete" : "Mark Completed"}
                                 </button>
                             </td>
                             <td>
