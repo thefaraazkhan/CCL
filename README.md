@@ -8,6 +8,7 @@ This project is a simple Todo application that allows users to create, edit, and
 
 The project contains the following files and directories:
 
+```bash
 ├── index.js # Backend server entry point\
 ├── db.js # Configuration for connecting to the PostgreSQL database\
 ├── database.sql # SQL file for creating the necessary database tables\
@@ -18,6 +19,7 @@ The project contains the following files and directories:
 │ │ ├── EditTodo.jsx # Component for editing a todo item\
 │ │ ├── InputTodo.jsx # Component for adding new todo items\
 │ │ └── ListTodos.jsx # Component for displaying the list of todos\
+```
 
 ## Installation
 
